@@ -2,7 +2,6 @@ FROM php:5.6.20-apache
 
 # change default ftp server for apt-get repository
 RUN sed -i.bak -e "s%http://httpredir.debian.org/debian%http://ftp.jp.debian.org/debian/%g" /etc/apt/sources.list
-#RUN apt-get update && apt-get -y install git
 
 # recompile php to add extensions
 RUN apt-get update && apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng12-dev libmcrypt-dev zlib1g-dev
