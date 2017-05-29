@@ -1,6 +1,7 @@
 FROM php:5.6.20-apache
 
 # change default ftp server for apt-get repository
+RUN apt-get update -y
 RUN sed -i.bak -e "s%http://httpredir.debian.org/debian%http://ftp.jp.debian.org/debian/%g" /etc/apt/sources.list
 
 # recompile php to add extensions
@@ -12,7 +13,6 @@ COPY php.ini /usr/local/etc/php/
 
 # install composer 
 RUN curl -f https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-# install laravel global using composer
 RUN composer global require "laravel/installer"
 RUN echo 'export PATH=~/.composer/vendor/bin:$PATH' >> ~/.bashrc && . ~/.bashrc
 

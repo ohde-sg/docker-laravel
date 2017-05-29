@@ -3,7 +3,7 @@ services:
   myappdb:
     build: mysql
     volumes:
-      - myappdb:/var/lib/mysql
+      - laraveldb:/var/lib/mysql
       - ./mysql.conf:/etc/mysql/conf.d
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -21,4 +21,4 @@ services:
     depends_on:
       - myappdb
 volumes:
-  myappdb:
+  laraveldb:
