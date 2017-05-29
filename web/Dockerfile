@@ -7,14 +7,14 @@ RUN sed -i.bak -e "s%http://httpredir.debian.org/debian%http://ftp.jp.debian.org
 RUN apt-get update && apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng12-dev libmcrypt-dev zlib1g-dev
 RUN docker-php-ext-install pdo_mysql mysqli mbstring gd iconv mcrypt zip
 
+# set prepared php.ini file
+COPY php.ini /usr/local/etc/php/
+
 # install composer 
 RUN curl -f https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 # install laravel global using composer
 RUN composer global require "laravel/installer"
 RUN echo 'export PATH=~/.composer/vendor/bin:$PATH' >> ~/.bashrc && . ~/.bashrc
-
-# set prepared php.ini file
-COPY php.ini /usr/local/etc/php/
 
 # install mysql client
 RUN apt-get install -y mysql-client
@@ -36,5 +36,8 @@ ENV LC_ALL ja_JP.UTF-8
 
 # システム時刻を日本時間に変更
 ENV TZ Asia/Tokyo
+
+# rewriteモジュールを有効にする
+RUN a2enmod rewrite
 
 WORKDIR /var/www/html
